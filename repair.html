@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reparación TPV Minimarket - Error 500</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .info {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+        .commands {
+            background: #f5f5f5;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 25px;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            color: #666;
+        }
+        .command-label {
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        .command {
+            background: white;
+            padding: 8px;
+            border-radius: 3px;
+            margin-bottom: 8px;
+            color: #c7254e;
+            word-break: break-all;
+            white-space: pre-wrap;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .steps {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+            font-size: 13px;
+            color: #666;
+        }
+        .step {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .step:before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            background: #667eea;
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .success { color: #28a745; font-weight: bold; }
+        .error { color: #dc3545; font-weight: bold; }
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .result {
+            display: none;
+            background: #f0f4ff;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            border-left: 4px solid #28a745;
+        }
+        .result.error {
+            border-left-color: #dc3545;
+            background: #fff5f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Reparación de Error 500</h1>
+        <p class="subtitle">TPV Minimarket - Tiendago.click</p>
+
+        <div class="info">
+            <strong>⚠️ Problema detectado:</strong> El servidor está mostrando Error 500. Esto es normal después de un despliegue inicial. Haz clic en el botón de abajo para reparar automáticamente.
+        </div>
+
+        <div class="commands">
+            <div class="command-label">Comando a ejecutar:</div>
+            <div class="command">cd /home/u182007214/public_html && php artisan key:generate --force && php artisan migrate --force && php artisan cache:clear && php artisan config:clear && php artisan optimize:clear && php artisan config:cache && php artisan optimize</div>
+        </div>
+
+        <button id="repairBtn" onclick="startRepair()">🚀 Iniciar Reparación Automática</button>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Ejecutando reparación (esto puede tomar 1-2 minutos)...</p>
+        </div>
+
+        <div id="result" class="result"></div>
+
+        <div class="steps">
+            <strong>📋 Pasos siguientes después de la reparación:</strong>
+            <div class="step" data-step="1">Recarga la página: <code>https://tiendago.click</code></div>
+            <div class="step" data-step="2">Inicia sesión con:<br><code>Usuario: admin</code><br><code>Contraseña: admin123</code></div>
+            <div class="step" data-step="3"><strong style="color: #dc3545;">CAMBIA LA CONTRASEÑA INMEDIATAMENTE</strong></div>
+        </div>
+    </div>
+
+    <script>
+        async function startRepair() {
+            const btn = document.getElementById('repairBtn');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+
+            btn.disabled = true;
+            loading.style.display = 'block';
+            result.style.display = 'none';
+
+            try {
+                // Intentar varias rutas posibles
+                const paths = [
+                    '/repair-500.php?key=Ssh@2024Secure%23789Ssh@2024Secure%23789',
+                    '/public/repair-500.php?key=Ssh@2024Secure%23789Ssh@2024Secure%23789',
+                ];
+
+                let response = null;
+                for (const path of paths) {
+                    try {
+                        response = await fetch(path, { mode: 'cors' });
+                        if (response.ok) break;
+                    } catch (e) {
+                        // Continuar con la siguiente ruta
+                    }
+                }
+
+                if (!response || !response.ok) {
+                    throw new Error('No se pudo conectar al servidor de reparación');
+                }
+
+                const text = await response.text();
+                
+                loading.style.display = 'none';
+                result.style.display = 'block';
+                result.className = 'result';
+                result.innerHTML = '<strong class="success">✅ Reparación completada</strong><p>Los comandos se han ejecutado exitosamente. Recarga la página en 5 segundos...</p>';
+                
+                setTimeout(() => {
+                    window.location.reload();
+                }, 5000);
+
+            } catch (error) {
+                loading.style.display = 'none';
+                result.style.display = 'block';
+                result.className = 'result error';
+                result.innerHTML = '<strong class="error">❌ Error</strong><p>' + error.message + '</p><p>Intenta ejecutar el comando manualmente en el Terminal de Hostinger.</p>';
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
