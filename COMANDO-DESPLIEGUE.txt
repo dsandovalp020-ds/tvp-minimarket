@@ -1,0 +1,63 @@
+╔════════════════════════════════════════════════════════════════╗
+║           COMANDO DIRECTO PARA DESPLIEGUE EN HOSTINGER        ║
+╚════════════════════════════════════════════════════════════════╝
+
+PASOS:
+1. Accede a: https://hpanel.hostinger.com
+2. Ve a: Sitios web → tiendago.click → Archivos → Terminal
+3. Copia el COMANDO COMPLETO de abajo
+4. Pégalo en la terminal
+5. Presiona ENTER
+6. Espera 5-10 minutos
+7. Visita: https://www.tiendago.click
+
+═══════════════════════════════════════════════════════════════════
+
+COMANDO (copia todo esto):
+
+cd /domains/tiendago.click/public_html && \
+composer install --no-dev --optimize-autoloader && \
+cp .env.example .env && \
+sed -i 's|^APP_URL=.*|APP_URL=https://www.tiendago.click|' .env && \
+sed -i 's|^APP_DEBUG=.*|APP_DEBUG=false|' .env && \
+sed -i 's|^APP_ENV=.*|APP_ENV=production|' .env && \
+php artisan key:generate --force && \
+php artisan migrate --force && \
+php artisan storage:link 2>/dev/null || true && \
+php artisan config:cache && \
+php artisan route:cache && \
+php artisan view:cache && \
+php artisan optimize && \
+chmod -R 775 storage bootstrap/cache public/uploads && \
+echo "✅ CONFIGURACIÓN COMPLETADA"
+
+═══════════════════════════════════════════════════════════════════
+
+¿QUÉ HACE ESTE COMANDO?
+
+1. Instala todas las librerías PHP
+2. Crea el archivo .env con configuración para producción
+3. Genera la clave de encriptación
+4. Ejecuta las migraciones de BD
+5. Configura el storage
+6. Optimiza cachés y rutas
+7. Establece permisos correctos
+8. Muestra confirmación
+
+═══════════════════════════════════════════════════════════════════
+
+DESPUÉS DE QUE TERMINE:
+
+Usuario: admin
+Contraseña: admin123
+
+⚠️ CAMBIA ESTA CONTRASEÑA INMEDIATAMENTE
+
+═══════════════════════════════════════════════════════════════════
+
+¿PROBLEMAS?
+
+Ver logs:
+tail -f /domains/tiendago.click/public_html/storage/logs/laravel.log
+
+═══════════════════════════════════════════════════════════════════
