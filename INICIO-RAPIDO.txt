@@ -1,0 +1,250 @@
+╔════════════════════════════════════════════════════════════════╗
+║          TPV MINIMARKET - GUÍA DE INICIO RÁPIDO               ║
+║                   Sistema Punto de Venta                      ║
+╚════════════════════════════════════════════════════════════════╝
+
+📌 ESTADO ACTUAL (23/11/2026 16:50)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ SERVIDOR ACTIVO
+   • Laravel corriendo en http://localhost:8000
+   • Framework: Laravel 11.51.0
+   • PHP: 8.3.36
+   • Laragon: Configurado
+
+⚠️  PENDIENTE: Iniciar MySQL
+   • Database: u182007214_lulu_market
+   • Usuario: u182007214_lulu
+   • Contraseña: P4^?ctgDn@ns
+
+
+🚀 PASOS PARA ENTRAR AL SISTEMA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OPCIÓN 1: Entrada Rápida (si MySQL ya está iniciado)
+─────────────────────────────────────────────────────
+1. Abre tu navegador web favorito (Chrome, Edge, Firefox)
+2. Escribe: http://localhost:8000
+3. Será redirigido al login
+4. Ingresa:
+   Usuario: admin
+   Contraseña: admin123
+5. ¡Acceso otorgado!
+
+OPCIÓN 2: Iniciar MySQL primero (si no está corriendo)
+──────────────────────────────────────────────────────
+1. Abre Laragon (si no está abierto)
+   Archivo: C:\laragon\laragon.exe
+2. Clic en botón "Iniciar Todo" (ícono de play verde)
+3. Espera 5-10 segundos para que MySQL inicie
+4. Abre navegador: http://localhost:8000
+5. Ingresa credenciales (ver arriba)
+
+OPCIÓN 3: Importar Base de Datos (si es nueva instalación)
+───────────────────────────────────────────────────────────
+1. Abre PowerShell o CMD en la carpeta del proyecto
+   (Click derecho → Open PowerShell window here)
+
+2. Ejecuta (elige UNO):
+   
+   a) Migraciones (recomendado):
+      $php = "C:\laragon\bin\php\php-8.3.36-Win32-vs16-x64\php.exe"
+      & $php artisan migrate --seed
+
+   b) SQL directo:
+      $mysql = "C:\laragon\bin\mysql\mysql-8.4.3-winx64\bin\mysql.exe"
+      & $mysql -u u182007214_lulu -p < database\install.sql
+      (Ingresa contraseña: P4^?ctgDn@ns)
+
+3. Luego accede a: http://localhost:8000
+
+
+🔑 USUARIOS DE PRUEBA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Admin (acceso total):
+  Usuario: admin
+  Contraseña: admin123
+  Permisos: Todos los módulos
+
+Gerente (gestión):
+  Usuario: gerente
+  Contraseña: gerente123
+  Permisos: Reportes, configuración, usuarios
+
+Cajero (punto de venta):
+  Usuario: cajero
+  Contraseña: cajero123
+  Permisos: Solo operaciones de ventas
+
+
+📊 MÓDULOS DISPONIBLES EN EL SISTEMA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. DASHBOARD
+   • Gráficos en tiempo real
+   • Resumen de ventas
+   • Productos más vendidos
+
+2. POS (PUNTO DE VENTA)
+   • Búsqueda rápida de productos
+   • Código de barras
+   • Múltiples formas de pago
+   • Impresión de tickets
+   • Cambio automático
+
+3. INVENTARIO
+   • Gestión de productos
+   • Categorías con colores
+   • Control de stock
+   • Alertas de bajo stock
+   • Fechas de vencimiento
+   • Movimientos detallados
+
+4. CLIENTES
+   • Base de datos de clientes
+   • Sistema de puntos
+   • Crédito por cliente
+   • Historial de compras
+
+5. PROVEEDORES & COMPRAS
+   • Gestión de órdenes
+   • Seguimiento de compras
+   • Actualización automática de stock
+
+6. CAJA
+   • Apertura/cierre de turnos
+   • Cuadre de efectivo
+   • Reporte diario
+
+7. PROMOCIONES
+   • Descuentos porcentaje/monto
+   • Ofertas 2x1, 3x2
+   • Precios especiales
+
+8. REPORTES
+   • Ventas por período
+   • Estado de inventario
+   • Productos próximos a vencer
+
+9. CONFIGURACIÓN
+   • Datos de empresa
+   • Moneda y impuestos
+   • Mensajes de tickets
+   • Series de comprobantes
+
+10. BACKUP & RESTORE
+    • Copias de seguridad
+    • Restauración de backups
+
+
+⌨️  ATAJOS DEL POS (TECLADO)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Enter    → Agregar primer producto encontrado en búsqueda
+F2       → Abrir modal de cobro/pago
+Esc      → Cerrar modal actual
+Tab      → Navegar entre campos
+
+
+🔧 COMANDOS ÚTILES (PowerShell)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# Para obtener alias fácil:
+$php = "C:\laragon\bin\php\php-8.3.36-Win32-vs16-x64\php.exe"
+
+# Limpiar cachés:
+& $php artisan cache:clear
+& $php artisan config:clear
+& $php artisan view:clear
+
+# Ver migraciones:
+& $php artisan migrate:status
+
+# Reiniciar BD (¡borra datos!):
+& $php artisan migrate:fresh --seed
+
+# Iniciar servidor en otra terminal:
+cd C:\Users\DeepSolutions.tech\Documents\tvp-minimarket
+& $php artisan serve
+
+
+🌐 PRODUCCIÓN EN HOSTINGER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+El SaaS está configurado para producción en:
+  https://tiendago.click
+
+El ejecutable offline conecta automáticamente a este dominio.
+
+Para cambiar a desarrollo: Modifica .env
+  APP_URL=http://localhost:8000
+
+
+📱 EJECUTABLE OFFLINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Estado: Código fuente disponible (requiere compilación)
+
+Características:
+  ✓ Funciona sin internet
+  ✓ Sincroniza cuando hay conexión
+  ✓ Autenticación por tokens API
+  ✓ Permite crear ventas offline
+
+Compilación:
+  Requiere usar framework como Electron o Tauri
+  API: http://localhost:8000/api (tokens)
+
+
+🆘 SOLUCIÓN DE PROBLEMAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+P: "No puedo conectar a la base de datos"
+R: Inicia MySQL desde Laragon (clic "Iniciar Todo")
+
+P: "El puerto 8000 ya está en uso"
+R: Otra aplicación usa ese puerto. Opciones:
+   - Cierra la otra aplicación
+   - Usa: php artisan serve --port=8001
+
+P: "No funciona la búsqueda de productos"
+R: Verifica que MySQL esté iniciado y la BD tenga datos
+
+P: "Olvidé la contraseña"
+R: Ejecuta en PowerShell:
+   & $php artisan reset-passwords
+
+P: "Las imágenes no cargan"
+R: Ejecuta:
+   & $php artisan storage:link
+
+
+📞 DOCUMENTACIÓN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Consulta estos archivos:
+  • README.md - Documentación técnica completa
+  • ESTADO-SAAS.md - Reporte de estado actual
+  • TPV-Minimarket-Documentacion.pdf - Manual del usuario
+
+
+🎯 CHECKLIST RÁPIDO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+□ MySQL iniciado desde Laragon
+□ Servidor Laravel escuchando en puerto 8000
+□ Base de datos u182007214_lulu_market existe
+□ Migraciones ejecutadas (php artisan migrate)
+□ Accedo a http://localhost:8000 sin errores
+□ Puedo ingresar con admin/admin123
+□ Aparecen productos en inventario
+□ POS permite buscar y agregar productos
+□ Puedo crear una venta de prueba
+□ El ticket se imprime correctamente
+
+
+═══════════════════════════════════════════════════════════════════════
+Generado: 23/11/2026 16:50:02
+Estado: ✅ SISTEMA OPERATIVO Y LISTO
+═══════════════════════════════════════════════════════════════════════

@@ -1,0 +1,15 @@
+<IfModule mod_rewrite.c>
+    Options -Indexes -MultiViews
+    RewriteEngine On
+
+    RewriteRule ^\.well-known(?:/|$) - [L]
+    RewriteRule (^|/)\.(?!well-known(?:/|$)) - [F,L]
+    RewriteRule ^(?:app|bootstrap|config|database|resources|routes|tests|vendor)(?:/|$) - [F,L,NC]
+    RewriteRule ^(?:artisan|composer\.(?:json|lock)|package(?:-lock)?\.json|phpunit\.xml(?:\.dist)?|bk_basededatos\.sql|main\.py|reset-passwords\.php|seed-demo\.php|public/(?:reset-passwords|seed-demo)\.php)$ - [F,L,NC]
+    RewriteRule ^(?:backups|public/backups)(?:/|$) - [F,L,NC]
+    RewriteRule \.(?:sql|log|bak|old|tmp|gz|zip)(?:\.|$) - [F,L,NC]
+
+    RewriteCond %{REQUEST_URI} !^/public(?:/|$) [NC]
+    RewriteCond %{REQUEST_URI} !^/\.well-known(?:/|$) [NC]
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
